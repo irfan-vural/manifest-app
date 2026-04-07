@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manifestapp/features/chat/presentation/pages/chat_page.dart';
 import '../../../../injection_container.dart';
 import '../cubit/coaches_cubit.dart';
 import '../cubit/coaches_state.dart';
@@ -9,35 +10,32 @@ class CoachesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // BlocProvider, Cubit'i bu sayfaya ve altındaki tüm widget'lara sağlar
     return BlocProvider(
-      // sl() ile GetIt üzerinden Cubit'imizin taze bir kopyasını alıp fetchCoaches() metodunu tetikliyoruz
       create: (_) => sl<CoachesCubit>()..fetchCoaches(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('WellnessAI - Choose Your Expert'),
           centerTitle: true,
         ),
-        // BlocBuilder, Cubit'ten gelen state değişikliklerini dinler ve sadece burayı rebuild eder
         body: BlocBuilder<CoachesCubit, CoachesState>(
           builder: (context, state) {
-            // Veriler yüklenirken ekranda dönen bir progress indicator gösteriyoruz
+            // loading durumu
             if (state is CoachesLoading || state is CoachesInitial) {
               return const Center(child: CircularProgressIndicator());
             }
-            // Hata durumunda hata mesajını ekrana basıyoruz
+            // hatalı durum
             else if (state is CoachesError) {
               return Center(child: Text(state.message));
             }
-            // Veriler başarıyla geldiğinde GridView'i çiziyoruz
+            // başarılı yüklenme durumunda koçların listesini alıp GridView ile gösteriyoruz
             else if (state is CoachesLoaded) {
               final coaches = state.coaches;
 
-              // Case'de istenen GridView yapısı
+              // griidview yapısı
               return GridView.builder(
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Yan yana 2 koç kartı
+                  crossAxisCount: 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
@@ -51,12 +49,16 @@ class CoachesPage extends StatelessWidget {
                     ),
                     child: InkWell(
                       onTap: () {
-                        // Tıklanınca chat sayfasına gidecek (navigate işlemini daha sonra ekleyeceğiz)
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(coach: coach),
+                          ),
+                        );
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Şimdilik placeholder ikon koyalım, assetleri sonra ayarlarız
                           const Icon(
                             Icons.person,
                             size: 64,
@@ -75,7 +77,7 @@ class CoachesPage extends StatelessWidget {
               );
             }
 
-            return const SizedBox.shrink(); // Beklenmeyen bir durumda boş widget döner
+            return const SizedBox.shrink(); // bklenmeyen bir durumda boş widget döner
           },
         ),
       ),

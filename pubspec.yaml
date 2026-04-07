@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^4.6.0
   firebase_remote_config: ^6.3.0
   firebase_ai: ^3.10.0
+  firebase_auth: ^6.3.0
   #State management
   flutter_bloc: ^9.1.1
   equatable: ^2.0.8
