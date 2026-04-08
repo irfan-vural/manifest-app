@@ -20,7 +20,7 @@ class ChatRepositoryImpl implements ChatRepository {
     final prompt = remoteConfig.getString(remoteConfigKey);
 
     final model = firebaseAI.generativeModel(
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash-lite',
       systemInstruction: Content.system(prompt),
     );
     // modeli sohbet oturumuna dönüştür ve döndür
