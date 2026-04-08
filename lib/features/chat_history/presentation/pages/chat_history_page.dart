@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manifestapp/features/chat/presentation/pages/chat_page.dart';
 import 'package:manifestapp/features/coaches/domain/entities/coach.dart';
-import '../../../../injection_container.dart';
 import '../cubit/chat_history_cubit.dart';
 import '../cubit/chat_history_state.dart';
 
@@ -22,19 +21,16 @@ class ChatHistoryPage extends StatelessWidget {
           } else if (state is ChatHistoryLoaded) {
             final sessions = state.sessions;
 
-            // Eğer hiç geçmiş sohbet yoksa kullanıcıya boş state gösteriyoruz
             if (sessions.isEmpty) {
               return const Center(
                 child: Text('Henüz hiçbir koçla sohbet etmedin.'),
               );
             }
 
-            // Geçmiş sohbetleri listeleyen yapı
             return ListView.builder(
               itemCount: sessions.length,
               itemBuilder: (context, index) {
                 final session = sessions[index];
-                // Son mesajı almak için
                 final lastMessage = session.messages.isNotEmpty
                     ? session.messages.last.text
                     : 'Mesaj yok';
@@ -56,32 +52,24 @@ class ChatHistoryPage extends StatelessWidget {
                     subtitle: Text(
                       lastMessage,
                       maxLines: 1,
-                      overflow: TextOverflow
-                          .ellipsis, // Uzun mesajların sonuna ... koyar
+                      overflow: TextOverflow.ellipsis,
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      // Tıklanan sohbetin koç objesini yeniden oluşturuyoruz
                       final coach = Coach(
                         id: session.coachId,
                         name: session.coachName,
-                        iconPath:
-                            '', // History'de ikon tutmadığımız için boş geçebiliriz
-                        remoteConfigKey:
-                            session.coachId, // Biz key'i ID olarak kaydetmiştik
+                        iconPath: '',
+                        remoteConfigKey: session.coachId,
                       );
 
-                      // Hem koç bilgisini hem de o anki session'ı göndererek ChatPage'i açıyoruz
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChatPage(
-                            coach: coach,
-                            existingSession: session, // Geçmiş sohbet objesi
-                          ),
+                          builder: (context) =>
+                              ChatPage(coach: coach, existingSession: session),
                         ),
                       ).then((_) {
-                        // Kullanıcı chat sayfasından geri döndüğünde geçmiş listesini yenile!
                         context.read<ChatHistoryCubit>().loadSessions();
                       });
                     },

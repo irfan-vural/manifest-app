@@ -18,11 +18,22 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
-
+  final ScrollController _scrollController = ScrollController();
   @override
   void dispose() {
     _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   @override
@@ -47,7 +58,14 @@ class _ChatPageState extends State<ChatPage> {
         body: Column(
           children: [
             Expanded(
-              child: BlocBuilder<ChatCubit, ChatState>(
+              child: BlocConsumer<ChatCubit, ChatState>(
+                listener: (context, state) {
+                  if (state is ChatActive) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      _scrollToBottom();
+                    });
+                  }
+                },
                 builder: (context, state) {
                   if (state is ChatConnecting || state is ChatInitial) {
                     return const Center(child: CircularProgressIndicator());
@@ -63,6 +81,7 @@ class _ChatPageState extends State<ChatPage> {
                       padding: const EdgeInsets.all(16),
                       itemCount:
                           state.messages.length + (state.isBotTyping ? 1 : 0),
+                      controller: _scrollController,
                       itemBuilder: (context, index) {
                         if (index == state.messages.length &&
                             state.isBotTyping) {
