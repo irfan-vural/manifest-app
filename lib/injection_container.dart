@@ -41,7 +41,8 @@ Future<void> init() async {
   );
 
   // --- CHAT CUBIT ---
-  sl.registerFactory(() => ChatCubit(repository: sl()));
-  // --- CHAT HISTORY CUBIT ---
+  sl.registerFactory(
+    () => ChatCubit(repository: sl(), historyRepository: sl()),
+  ); // --- CHAT HISTORY CUBIT ---
   sl.registerFactory(() => ChatHistoryCubit(repository: sl()));
 }

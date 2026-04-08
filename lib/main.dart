@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show BlocProvider;
+import 'package:manifestapp/features/chat_history/presentation/cubit/chat_history_cubit.dart'
+    show ChatHistoryCubit;
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 import 'core/presentation/pages/main_wrapper.dart';
@@ -29,14 +32,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Wellness AI',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return BlocProvider(
+      create: (_) => di.sl<ChatHistoryCubit>()..loadSessions(),
+      child: MaterialApp(
+        title: 'Wellness AI',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const MainWrapper(),
       ),
-      home: const MainWrapper(),
     );
   }
 }

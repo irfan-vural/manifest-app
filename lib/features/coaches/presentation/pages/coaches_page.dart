@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manifestapp/features/chat/presentation/pages/chat_page.dart';
+import 'package:manifestapp/features/chat_history/presentation/cubit/chat_history_cubit.dart'
+    show ChatHistoryCubit;
 import '../../../../injection_container.dart';
 import '../cubit/coaches_cubit.dart';
 import '../cubit/coaches_state.dart';
@@ -54,7 +56,9 @@ class CoachesPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => ChatPage(coach: coach),
                           ),
-                        );
+                        ).then((_) {
+                          context.read<ChatHistoryCubit>().loadSessions();
+                        });
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

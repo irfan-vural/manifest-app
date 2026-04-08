@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manifestapp/features/chat_history/data/models/hive_chat_session.dart'
+    show HiveChatSession;
 import '../../../../injection_container.dart';
 import '../../../coaches/domain/entities/coach.dart';
 import '../cubit/chat_cubit.dart';
@@ -7,8 +9,8 @@ import '../cubit/chat_state.dart';
 
 class ChatPage extends StatefulWidget {
   final Coach coach;
-
-  const ChatPage({super.key, required this.coach});
+  final HiveChatSession? existingSession;
+  const ChatPage({super.key, required this.coach, this.existingSession});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -27,7 +29,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<ChatCubit>()
-        ..startConversation(widget.coach.remoteConfigKey, widget.coach.name),
+        ..startConversation(
+          widget.coach.remoteConfigKey,
+          widget.coach.name,
+          existingSession: widget.existingSession,
+        ),
       child: Scaffold(
         appBar: AppBar(
           title: Row(
