@@ -1,7 +1,7 @@
 # 🧠 Wellness AI Coach
 
 ![Chat Interaction Demo]
-(![Image](https://github.com/user-attachments/assets/ba5773fe-2f98-4b73-90f5-dbec42f7ee51))
+![Image]https://github.com/user-attachments/assets/ba5773fe-2f98-4b73-90f5-dbec42f7ee51
 
 A production-ready Flutter application that provides personalized AI coaching (Dietitian, Fitness, Yoga, Pilates) using Firebase AI (Vertex AI) and Remote Config.
 
