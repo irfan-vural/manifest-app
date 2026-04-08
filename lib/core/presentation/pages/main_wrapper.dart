@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:manifestapp/features/chat_history/presentation/pages/chat_history_page.dart'
+    show ChatHistoryPage;
 import '../../../features/coaches/presentation/pages/coaches_page.dart';
 
 class MainWrapper extends StatefulWidget {
@@ -11,12 +13,7 @@ class MainWrapper extends StatefulWidget {
 class _MainWrapperState extends State<MainWrapper> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    const CoachesPage(),
-    const Center(
-      child: Text('Chat History Sayfası Yapım Aşamasında 🚧'),
-    ), // TODO : ayar çekicez
-  ];
+  final List<Widget> _pages = [const CoachesPage(), const ChatHistoryPage()];
 
   @override
   Widget build(BuildContext context) {
