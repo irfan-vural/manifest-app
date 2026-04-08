@@ -1,7 +1,6 @@
 # 🧠 Wellness AI Coach
 
-![Chat Interaction Demo]
-![Image]https://github.com/user-attachments/assets/ba5773fe-2f98-4b73-90f5-dbec42f7ee51
+![Chat Interaction Demo](https://github.com/user-attachments/assets/ba5773fe-2f98-4b73-90f5-dbec42f7ee51)
 
 A production-ready Flutter application that provides personalized AI coaching (Dietitian, Fitness, Yoga, Pilates) using Firebase AI (Vertex AI) and Remote Config.
 
@@ -41,8 +40,7 @@ The application leverages **Firebase AI (`firebase_ai`)** linked to Google Cloud
 
 ### 3. Persistent Contextual Chat (Hive)
 
-![History and Local Storage Demo]
-(<![Image](https://github.com/user-attachments/assets/85258930-c905-4da6-91e4-e49e5c53ca84)>)
+![History and Local Storage Demo](https://github.com/user-attachments/assets/85258930-c905-4da6-91e4-e49e5c53ca84)
 
 A highly performant NoSQL database, **Hive**, is implemented for local storage.
 
