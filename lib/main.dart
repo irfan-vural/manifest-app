@@ -3,12 +3,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 import 'core/presentation/pages/main_wrapper.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'features/chat_history/data/models/hive_chat_message.dart';
+import 'features/chat_history/data/models/hive_chat_session.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // Uygulama ayağa kalkmadan önce tüm bağımlılıkları başlatıyoruz
+  await Hive.initFlutter();
+
+  Hive.registerAdapter(HiveChatMessageAdapter());
+  Hive.registerAdapter(HiveChatSessionAdapter());
+
+  // chat oturumlarını box
+  await Hive.openBox<HiveChatSession>('chat_sessions');
   await di.init();
 
   runApp(const MyApp());
