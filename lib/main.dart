@@ -35,12 +35,7 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (_) => di.sl<ChatHistoryCubit>()..loadSessions(),
       child: MaterialApp(
-        title: 'Wellness AI',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
         home: const MainWrapper(),
       ),
     );
