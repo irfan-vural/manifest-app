@@ -46,7 +46,10 @@ class _ChatPageState extends State<ChatPage> {
           existingSession: widget.existingSession,
         ),
       child: Scaffold(
+        backgroundColor: Colors.grey.shade50,
         appBar: AppBar(
+          backgroundColor: Colors.grey.shade50,
+          scrolledUnderElevation: 0.0,
           title: Row(
             children: [
               const Icon(Icons.psychology, color: Colors.deepPurple),

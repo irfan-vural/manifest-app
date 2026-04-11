@@ -18,8 +18,13 @@ class _MainWrapperState extends State<MainWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade50,
+
       body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey.shade50,
+        selectedItemColor: Colors.blue,
+
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

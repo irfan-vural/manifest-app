@@ -11,7 +11,21 @@ class ChatHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Chat History'), centerTitle: true),
+      backgroundColor: Colors.grey.shade50,
+
+      appBar: AppBar(
+        backgroundColor: Colors.grey.shade50,
+        scrolledUnderElevation: 0.0,
+        title: const Text(
+          'Chat History',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Colors.black87,
+            letterSpacing: -0.5,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: BlocBuilder<ChatHistoryCubit, ChatHistoryState>(
         builder: (context, state) {
           if (state is ChatHistoryLoading || state is ChatHistoryInitial) {
